@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<link rel="stylesheet" href="onsenui/css/onsenui.css">
+		<link rel="stylesheet" href="onsenui/css/onsen-css-components.min.css">
+		<link rel = "stylesheet" href = "css/myCss.css">
+		<link rel = "stylesheet" href = "css/iframe.css">
+		
+		<script src="onsenui/js/onsenui.min.js" charset="utf-8"></script>
+		<script src ="js/onsenUIHandler.js" charset="utf-8"></script>
+		<script type = "text/javascript" src = "js/jquery.js" charset="utf-8"></script>
+		<title>Faculty Attendance</title>
+    </head>	
+	<body>
+		<ons-page>
+		  <ons-toolbar>
+				<div class = "center" id = "h1">
+				<img src="img/attendance3.jpg" width="30" height="30" style = "margin-top: 7px;" >
+				Faculty Attendance Monitoring</div>
+		  </ons-toolbar>
+		<ons-tabbar swipeable position="auto">
+			<ons-tab page="home.html" label="Read" icon="ion-qr-scanner"  size="30px"></ons-tab>
+			<ons-tab  page="log.html" id = "log" label="History" icon="ion-document-text"  size="30px"></ons-tab>
+			<ons-tab page="locator.html" id = "locator" label="locator" icon ="ion-information-circled"  size="30px"></ons-tab></ons-tabbar>
+			<ons-dialog id = "dialogs">
+				<ons-toolbar inline><div class="center" style = "text-align: center; color: black" id = "schedroomName"></div></ons-toolbar>
+				<p id = "schedtimeIO" style = "text-align: left; padding-left: 10px"></p>
+				<p id = "schedtimeIO_"style = "text-align: left; padding-left: 10px"></p><hr>
+				<p id = "timeInfo" style = "text-align: left; padding-left: 10px"></p>
+				<p id = "timeIn" style = "text-align: left; padding-left: 10px"></p><hr>
+				<divid = "dialogdataEnter"></div>
+				<ons-row class = "center" style = "text-align: center; padding-left: 10px; padding-right: 10px">
+					<ons-col style = "padding-right: 2px">
+						<ons-button type = "submit"  id = "dialogclose" style = "text-align: left; color: white" modifier="quiet">Close</ons-button>
+					</ons-col>
+					<ons-col style = "padding-left: 2px">
+						<ons-button type = "submit" id = "dialogok" style = "text-align: rigth; color: white" modifier="quite">Ok</ons-button>
+					</ons-col>
+				</ons-row>
+				  
+			 </ons-dialog>
+			<ons-dialog id = "remarksdialog">
+				<ons-toolbar inline><div class = "center" style="text-align: center; color: black" id = "sched_Dismiss">Early Dismissal Remarks</div></ons-toolbar>
+					<ons-list>
+							<ons-list-item tappable>
+								<label class="left">
+								<ons-radio name="remarks" input-id="radio-1" value = "Emergency" onclick = "remarksValue(this.value)"></ons-radio>
+								</label>
+								<label for="radio-1" class="center" style="text-align: center; color: black">Emergency</label>
+							</ons-list-item>
+							<ons-list-item tappable>
+								<label class="left">
+								<ons-radio name="remarks" input-id="radio-2" value = "Meeting" onclick = "remarksValue(this.value)"></ons-radio>
+								</label>
+								<label for="radio-2" class="center" style="text-align: center; color: black">Meeting</label>
+							</ons-list-item>
+							<ons-list-item tappable>
+								<label class = "left">
+									<ons-radio name = "remarks" input-id = "radio-3" value = "Exam" onclick = "remarksValue(this.value)"></ons-radio>
+								</label>
+								<label for = "radio-3" class = "center" style="text-align: center; color: black">Exam</label>
+							</ons-list-item>
+							<ons-list-item tappable>
+								<label class="left">
+									<ons-radio name = "remarks" input-id = "radio-4" value = "Cut off classes" onclick = "remarksValue(this.value)"></ons-radio>
+								</label>
+								<label for = "radio-4" class = "center" style="text-align: center; color: black">Cut off classes</label>
+							</ons-list-item>
+							<ons-list-item>
+								<input style="color: black; border: none" name="remarksresult" id="remarksresult"  placeholder="Other reason" value = ""></input>
+							</ons-list-item>
+					</ons-list>
+					<ons-row class = "center" style = "text-align: center; padding-left: 10px; padding-right: 10px">
+						<ons-col style = "padding-right: 2px">
+							<ons-button type = "submit"  id = "remarksclose" style = "text-align: left; color: white" modifier="quiet">Close</ons-button>
+						</ons-col>
+						<ons-col style = "padding-left: 2px">
+							<ons-button type = "submit" id = "remarksend" style = "text-align: rigth; color: white" modifier="quite">Ok</ons-button>
+						</ons-col>
+					</ons-row>
+					  <script type = 'text/javascript'>
+					 	function remarksValue(remarksinput){
+							 document.getElementById('remarksresult').value = remarksinput;
+						 } 
+					  </script>
+			</ons-dialog>
+		</ons-page>
+
+		<template id="home.html">
+		  <ons-page id="Tab1">
+				<div class="intro">
+					<ons-row style = "padding-left: 10px; padding-right: 10px">
+						<ons-col>
+							<div style="text-align: left; color: gray; opacity: 0.6; padding-top: 3px; " id = "devInfo"></div>		
+							<input  type = 'hidden' name = 'deviceInfo' id = 'deviceInfo' readonly = 'true'></input>				
+						</ons-col>
+						<ons-col>
+							<div style="text-align: right; color: gray; opacity: 0.6; padding-top: 3px;" id = "server_time"></div>
+						</ons-col>
+					</ons-row>
+					<p style="text-align: center; color: gray; opacity: 0.6; padding-top: 2px;">
+						Approach a NFC Tag
+					</p>
+				</div><h3>
+				<div class = "center">
+						<img id = "myImage" height="150" width="200"></img>
+				</div>
+				<div class = "title" id = "msg" style = " text-align: center; padding-left: 5px; padding-right: 5px; padding-top: 2px;"></div></h3>								
+				<div>
+					<ons-row style = "padding-left: 10px; padding-right: 10px">
+						<ons-col style = "padding-right: 2px">
+							<ons-button type = "submit" modifier="large--cta" id = "time_in"><ons-icon  size="30px" icon="ion-arrow-down-a"></ons-icon>Time In</ons-button>
+						</ons-col>
+						<ons-col style = "padding-left: 2px">
+							<ons-button type = "submit" modifier="large--cta" id = "time_out"><ons-icon  size="30px" icon="ion-arrow-up-a"></ons-icon> Time Out</ons-button>
+						</ons-col>
+					</ons-row>
+				</div>	
+		  </ons-page>
+		</template>
+ 
+		<template id="log.html">
+		  <ons-page id="Tab2">
+				<h4>><ons-list id = "latest" style = "margin-top: 10px; padding-left: 10px; padding-right: 10px"></ons-list></h4>
+				<ons-fab position="bottom right" id =  'deleteButton'>
+					<span style = "font-size: 20px" id = 'deleteTimer'>30</span>
+					<ons-icon icon="ion-trash-a" size = "30px"></ons-icon>
+				</ons-fab>
+		  </ons-page>
+		</template>
+		<template id  = "locator.html">
+			<ons-page id="Tab3">
+				<div class = "frame" id = "frame">
+					<iframe src = "http://lormafacultylocator.000webhostapp.com/faculty/mobile_locator.php" width = "100%" height = "100%" frameBorder = "0" hspace="0" vspace="0" marginheight="0" marginwidth="0">Something's wrong!</iframe>
+				</div>
+			</ons-page>
+		</template>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src = "js/index.js" charset="utf-8"></script>
+		<script type = "text/javascript" src = "js/connectionAjax.js" charset="utf-8"></script>
+	</body>
+</html>

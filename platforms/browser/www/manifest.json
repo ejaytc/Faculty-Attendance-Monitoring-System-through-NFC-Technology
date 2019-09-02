@@ -1,0 +1,12 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Faculty Attendance",
+  "short_name": "Faculty Attendance",
+  "version": "com.apache.cordova.fa",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "author": "Apache Cordova Team",
+  "icons": [],
+  "start_url": "index.html",
+  "theme_color": "#003300"
+}
